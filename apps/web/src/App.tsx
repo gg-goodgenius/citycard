@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Layout, Menu, Tooltip, Typography } from 'antd';
 import { useAppSelector } from './hooks/useAppSelector';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ const App: React.FC = () => {
 	const user = useAppSelector((state) => state.user.data);
 	const location = useLocation();
 	const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(true)
     const link_operator = [
         {to: 'card', content:'ЕКЖ', hint:'', disable: false},
         {to: 'control', content:'Контроллеры', hint:'', disable: false},
@@ -38,8 +38,15 @@ const App: React.FC = () => {
     useEffect(() => {
 		if (user) {
 			navigate('/about');
-		}
+            setLoading(false)
+		} else {
+            navigate('/login')
+            setLoading(false)
+        }
 	}, []);
+    if (loading) {
+        return <div>loading</div>
+    } else
     return (
         <Layout style={{minHeight:'100vh'}}>
             <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
