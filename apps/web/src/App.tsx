@@ -70,8 +70,8 @@ const App: React.FC = () => {
                 </Menu>
                 <UserInfo />
             </Header>
-            <Content >
-                <Layout>
+            <Content style={{ display: "flex", alignItems: 'center', flexDirection: 'column'}}>
+                <Layout style={{width: '80vw'}}>
                     <Outlet />
                 </Layout>
             </Content>
