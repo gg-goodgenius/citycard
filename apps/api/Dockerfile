@@ -1,7 +1,12 @@
-FROM python:3.11
+FROM golang as builder
 WORKDIR /app
-COPY ./req.txt /app/req.txt
-RUN pip install --no-cache-dir --upgrade -r /app/req.txt
-EXPOSE 9000
-COPY ./ /app
-CMD ["python", "main.py"]
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . ./
+RUN GOOS=linux go build -o ./build ./cmd/app
+
+FROM ubuntu
+ADD ./internal/adapters/db/postgres/migrations /migrations
+COPY --from=builder /app/build /home/citycard/app
+EXPOSE 8080 8080
+CMD ["./home/citycard/app"]
