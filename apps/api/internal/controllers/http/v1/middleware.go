@@ -3,7 +3,6 @@ package handler
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -11,17 +10,6 @@ import (
 )
 
 func CheckAuthToken(c *gin.Context) {
-	uniqueKey := c.Request.Header.Get("App-Key")
-	if uniqueKey != "" {
-		if uniqueKey != os.Getenv("APP_KEY") {
-			c.Status(http.StatusBadRequest)
-			c.Abort()
-			return
-		} else {
-			c.Next()
-			return
-		}
-	}
 	token := c.Request.Header.Get("Authorization")
 	if token == "" {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "No token provided"})
@@ -29,7 +17,7 @@ func CheckAuthToken(c *gin.Context) {
 		return
 	}
 
-	if _, err := myutil.AuthAdmin(token); err != nil {
+	if _, err := myutil.Auth("admin", token); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": fmt.Sprintf("Couldn't authorize you: %s", err)})
 		c.Abort()
 		return
