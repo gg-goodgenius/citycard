@@ -1,4 +1,7 @@
-declare namespace Database {
+import { BaseButtonProps } from "antd/es/button/button";
+
+
+declare namespace DatabaseType {
     export type User = {
         id: number;
         username: string;
@@ -22,7 +25,7 @@ declare namespace Database {
         age: number;
         snils: string;
     }
-    export type CadHistory = {
+    export type CardHistory = {
         id: number;
         card_id: Card['id'];
         date: string;
@@ -77,4 +80,20 @@ declare namespace Database {
         start_datetime: string;
         end_datetime: string;
     }
+}
+
+declare namespace TableDataType {
+    type Button = {
+        title: string;
+        type?: BaseButtonProps['type'];
+        danger?: boolean;
+        onClick: (id: Array<number> | number) => void
+        }
+    type Column = {
+        title?: string;
+        sorter?: boolean;
+        filters?: Array<any>;
+    }
+    type Title = string;
+    type RouteDetail = string;
 }

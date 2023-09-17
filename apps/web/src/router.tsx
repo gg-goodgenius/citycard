@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
 				path: '/card/:id',
 				element: (
 					<ProtectedRoute>
-						<CardDetail />
+						<CardDetail/>
 					</ProtectedRoute>
 				),
 			},
