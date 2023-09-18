@@ -2,7 +2,7 @@
 
 #!/bin/bash
 
-domains=(api.citycard.goodgenius.ru citycard.goodgenius.ru)
+domains=(api.citycard.goodgenius.ru op.citycard.goodgenius.ru  partner.citycard.goodgenius.ru  citycard.goodgenius.ru)
 rsa_key_size=4096
 data_path="./apps/certbot"
 email="info@intellectg.ru"
