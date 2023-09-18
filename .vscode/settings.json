@@ -1,0 +1,17 @@
+{
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "none",
+    "python.formatting.blackArgs": [
+        "--line-length=120"
+    ],
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "python.linting.mypyEnabled": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    }
+}
