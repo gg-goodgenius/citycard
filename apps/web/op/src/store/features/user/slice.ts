@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type UserState = {
-	data: Api.Response.User | null;
+	data: Api.Response.User | null ;
 	// data: Api.Response.User | null;
 };
 

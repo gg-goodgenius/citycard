@@ -4,9 +4,8 @@ import styles from './Login.module.scss'
 import { Typography } from 'antd'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchLogin } from '../../api/login';
+import { fetchLogin, fetchGetUserMe } from '../../api/login';
 import { setUser } from '../../store/features/user/slice';
-import { isErrored } from 'stream';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -40,7 +39,6 @@ const Login: React.FC = () => {
 
         setLoading(true);
         const { data, isError } = await fetchLogin(values);
-        console.log(data, isError);
         
         if (isError) {
             console.error(data);
@@ -49,12 +47,21 @@ const Login: React.FC = () => {
             return;
         }
 
-        // dispatch(setUser(data.user));
+        localStorage.setItem('accessToken', data.access_token);
+        localStorage.setItem('refreshToken', data.refresh_token);
+
+        const  me = await fetchGetUserMe()
+        if (me.isError) {
+            console.error(me.data);
+            error();
+            setLoading(false);
+            return;
+        }
+        dispatch(setUser(me.data));
         success();
         navigate('/');
         setLoading(false);
-        localStorage.setItem('accessToken', data.access_token);
-        localStorage.setItem('refreshToken', data.refresh_token);
+        
 
         console.log('Success login:', data);
     };

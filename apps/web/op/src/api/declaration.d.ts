@@ -26,6 +26,7 @@ declare namespace Api {
 		}
 
 		export type User = {
+			user_id: number;
 			username: string;
 			email: string;
 			role: 'operator' | 'partner'

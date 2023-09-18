@@ -13,5 +13,5 @@ export async function fetchLogin(payload: Api.Request.Login) {
 
 
 export async function fetchGetUserMe() {
-	return await fetchHandler<Api.Response.User>('users/me/');
+	return await fetchHandler<Api.Response.User>('me');
 }
