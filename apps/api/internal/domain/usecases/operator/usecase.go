@@ -29,7 +29,6 @@ func (uc *OperatorUseCase) Login(ctx context.Context, req LoginReqDTO) (TokenRes
 	if err != nil {
 		return TokenRespDTO{}, err
 	}
-
 	accessToken, err := myutil.CreateAccessToken("operator", userID)
 	if err != nil {
 		return TokenRespDTO{}, err
