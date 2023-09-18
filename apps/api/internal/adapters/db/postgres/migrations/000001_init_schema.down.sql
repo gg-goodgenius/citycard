@@ -10,5 +10,6 @@ DROP TABLE card_events CASCADE;
 DROP TYPE card_event_severity_enum CASCADE;
 DROP TABLE cards CASCADE;
 DROP TYPE gender_enum CASCADE;
+DROP TABLE user_sessions CASCADE;
 DROP TABLE users CASCADE;
 DROP TYPE user_role CASCADE;

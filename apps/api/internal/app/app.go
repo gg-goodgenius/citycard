@@ -2,7 +2,6 @@ package app
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -32,36 +31,23 @@ func Run() {
 		return
 	}
 	dsn := os.Getenv("DATABASE_URL")
-
-	db, err := sql.Open("postgres", dsn)
-	if err != nil {
-		log.Printf("couldn't connect to database: %s\n", err)
-		return
-	}
+	db := postgresdb.NewDatabase(dsn)
 	defer db.Close()
-
-	err = db.Ping()
-	if err != nil {
-		log.Printf("couldn't connect to database: %s\n", err)
-		return
-	}
-
 	err = postgresdb.Up(os.Getenv("MIGRATIONS_PATH"), dsn)
 	if err != nil && err.Error() != "no change" {
 		log.Printf("couldn't migrate into database: %s\n", err)
 		return
 	}
 
-	defer func() {
-		err := postgresdb.Down(os.Getenv("MIGRATIONS_PATH"), dsn)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}()
+	log.Printf("migrations completed successfully")
+
 	engine := handler.NewRouter()
-	// Создаем кастомный обработчик эндпоинтов, который для сервиса S3 и региона ru-central1 выдаст корректный URL
+
 	healthcheckComposite := composites.NewHealthcheckComposite()
 	healthcheckComposite.Handler.Register(engine)
+
+	operatorComposite := composites.NewOperatorComposite(db)
+	operatorComposite.Handler.Register(engine)
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%s", cfg.Port),
 		Handler: engine,
@@ -76,6 +62,10 @@ func Run() {
 
 	<-stop
 	go func() {
+		err := postgresdb.Down(os.Getenv("MIGRATIONS_PATH"), dsn)
+		if err != nil {
+			fmt.Println(err)
+		}
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel()
 		_ = srv.Shutdown(ctx)
