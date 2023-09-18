@@ -15,6 +15,7 @@ type UserService struct {
 
 type UserRepository interface {
 	GetByUsername(ctx context.Context, username string) (entity.User, error)
+	GetById(ctx context.Context, userID int64) (entity.User, error)
 	GetSessionByUserId(ctx context.Context, userId int64) (entity.Session, error)
 	GetSessionByRefreshToken(ctx context.Context, refreshToken string) (entity.Session, error)
 	CreateSession(ctx context.Context, ent entity.Session) error
@@ -25,6 +26,14 @@ func NewUserService(userRepository UserRepository) *UserService {
 	return &UserService{
 		userRepository: userRepository,
 	}
+}
+
+func (o *UserService) GetById(ctx context.Context, userID int64) (model.User, error) {
+	ent, err := o.userRepository.GetById(ctx, userID)
+	if err != nil {
+		return model.User{}, err
+	}
+	return mapper.UserEntityToModel(ent), nil
 }
 
 func (o *UserService) Login(ctx context.Context, user model.User) (int64, error) {

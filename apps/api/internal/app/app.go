@@ -17,6 +17,9 @@ import (
 	"github.com/heetch/confita"
 	"github.com/heetch/confita/backend/env"
 	_ "github.com/lib/pq"
+	_ "github.com/santosh/gingo/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func Run() {
@@ -42,12 +45,15 @@ func Run() {
 	log.Printf("migrations completed successfully")
 
 	engine := handler.NewRouter()
-
 	healthcheckComposite := composites.NewHealthcheckComposite()
 	healthcheckComposite.Handler.Register(engine)
 
 	operatorComposite := composites.NewOperatorComposite(db)
 	operatorComposite.Handler.Register(engine)
+
+	userComposite := composites.NewUserComposite(db)
+	userComposite.Handler.Register(engine)
+	engine.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%s", cfg.Port),
 		Handler: engine,

@@ -17,10 +17,10 @@ func init() {
 }
 
 func CreateAccessToken(userType string, userID int64) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Audience:  userType,
-		Subject:   strconv.FormatInt(userID, 10),
-		ExpiresAt: time.Now().Add(time.Hour).Unix(),
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"role":       userType,
+		"id":         strconv.FormatInt(userID, 10),
+		"expires_at": time.Now().Add(time.Hour).Unix(),
 	})
 	return token.SignedString(secret)
 }
@@ -33,18 +33,23 @@ func Auth(userType string, tokenString string) (int64, error) {
 		return 0, err
 	}
 
-	if claims, ok := token.Claims.(jwt.StandardClaims); ok && token.Valid {
-		if claims.Audience != userType {
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		fmt.Println(claims, "Token")
+
+		if claims["role"] != userType {
 			return 0, fmt.Errorf("token of wrong user type")
 		}
-		if claims.ExpiresAt > time.Now().Unix() {
+		if claims["expires_at"] == nil {
+			return 0, fmt.Errorf("bad claims")
+		}
+		if int64(claims["expires_at"].(float64)) < time.Now().Unix() {
 			return 0, fmt.Errorf("token is expired")
 		}
-		strId := claims.Subject
+		strId := claims["id"]
 		if strId == "" {
 			return 0, fmt.Errorf("no user id with such token")
 		}
-		id, err := strconv.ParseInt(strId, 10, 64)
+		id, err := strconv.ParseInt(strId.(string), 10, 64)
 
 		if err != nil {
 			return 0, err
@@ -52,7 +57,7 @@ func Auth(userType string, tokenString string) (int64, error) {
 		return id, nil
 	}
 
-	return 0, err
+	return 0, fmt.Errorf("claims are incorrect")
 }
 
 func GenerateRefreshToken() (string, error) {

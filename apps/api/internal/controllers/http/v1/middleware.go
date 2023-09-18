@@ -16,12 +16,26 @@ func CheckAuthToken(c *gin.Context) {
 		c.Abort()
 		return
 	}
+	userTypes := []string{"operator", "control", "external", "partner"}
 
-	if _, err := myutil.Auth("admin", token); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": fmt.Sprintf("Couldn't authorize you: %s", err)})
+	var id int64
+	var err error
+	for i := range userTypes {
+		if id, err = myutil.Auth(userTypes[i], token); err.Error() != "token of wrong user type" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("failed to authenticate user: %s", err)})
+			c.Abort()
+			return
+		}
+		if id != 0 {
+			break
+		}
+	}
+	if id == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user id is not found by token"})
 		c.Abort()
 		return
 	}
+	c.Next()
 }
 
 func CORSMiddleware() gin.HandlerFunc {
