@@ -2,8 +2,10 @@ package myutil
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/golang-jwt/jwt"
 )
@@ -14,14 +16,16 @@ func init() {
 	secret = []byte(os.Getenv("AUTH_SECRET"))
 }
 
-func CreateAdminToken(userID int64) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"admin": strconv.FormatInt(userID, 10),
+func CreateAccessToken(userType string, userID int64) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+		Audience:  userType,
+		Subject:   strconv.FormatInt(userID, 10),
+		ExpiresAt: time.Now().Add(time.Hour).Unix(),
 	})
 	return token.SignedString(secret)
 }
 
-func AuthAdmin(tokenString string) (int64, error) {
+func Auth(userType string, tokenString string) (int64, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return secret, nil
 	})
@@ -29,12 +33,18 @@ func AuthAdmin(tokenString string) (int64, error) {
 		return 0, err
 	}
 
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		strId := claims["admin"]
-		if strId == nil {
-			return 0, fmt.Errorf("incorrect auth token")
+	if claims, ok := token.Claims.(jwt.StandardClaims); ok && token.Valid {
+		if claims.Audience != userType {
+			return 0, fmt.Errorf("token of wrong user type")
 		}
-		id, err := strconv.ParseInt(strId.(string), 10, 64)
+		if claims.ExpiresAt > time.Now().Unix() {
+			return 0, fmt.Errorf("token is expired")
+		}
+		strId := claims.Subject
+		if strId == "" {
+			return 0, fmt.Errorf("no user id with such token")
+		}
+		id, err := strconv.ParseInt(strId, 10, 64)
 
 		if err != nil {
 			return 0, err
@@ -45,33 +55,15 @@ func AuthAdmin(tokenString string) (int64, error) {
 	return 0, err
 }
 
-func CreateUserToken(userID int64) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user": strconv.FormatInt(userID, 10),
-	})
-	return token.SignedString(secret)
-}
+func GenerateRefreshToken() (string, error) {
+	b := make([]byte, 32)
 
-func AuthUser(tokenString string) (int64, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return secret, nil
-	})
+	s := rand.NewSource(time.Now().Unix())
+	r := rand.New(s)
+
+	_, err := r.Read(b)
 	if err != nil {
-		return 0, err
+		return "", err
 	}
-
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		strId := claims["user"]
-		if strId == nil {
-			return 0, fmt.Errorf("incorrect auth token")
-		}
-		id, err := strconv.ParseInt(strId.(string), 10, 64)
-
-		if err != nil {
-			return 0, err
-		}
-		return id, nil
-	}
-
-	return 0, err
+	return fmt.Sprintf("%x", b), nil
 }
