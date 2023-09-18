@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   pgsql:
-    container_name: pgsql
+    container_name: ${PROJECT_NAME}-pgsql
     image: postgres
     env_file:
       - ./apps/pgsql/.env
@@ -20,8 +20,8 @@ services:
     build:
       context: ./apps/api
       dockerfile: Dockerfile
-    image: api
-    container_name: api
+    image: ${PROJECT_NAME}-api
+    container_name: ${PROJECT_NAME}-api
     env_file:
       - ./apps/api/.env
     volumes:
@@ -42,9 +42,9 @@ services:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
-    image: web
+    image: ${PROJECT_NAME}-web
     restart: on-failure
-    container_name: web
+    container_name: ${PROJECT_NAME}-web
     ports:
       - "80:80"
     healthcheck:
