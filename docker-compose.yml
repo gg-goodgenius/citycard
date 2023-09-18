@@ -111,13 +111,6 @@ services:
       interval: 10s
       timeout: 30s
       retries: 10
-    depends_on:
-      api:
-        condition: service_healthy
-      web-op:
-        condition: service_healthy
-      web-partner:
-        condition: service_healthy
 
   certbot:
     image: certbot/certbot
@@ -128,5 +121,5 @@ services:
       - ./apps/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 5d & wait $${!}; done;'"
     depends_on:
-      api:
+      nginx:
         condition: service_healthy
