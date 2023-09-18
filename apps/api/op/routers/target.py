@@ -1,3 +1,4 @@
+from constants import UserRole
 from core.database import get_db
 from core.router import generate_router
 from schemas import TargetCreate, TargetRead, TargetReadList, TargetUpdate
@@ -16,5 +17,6 @@ router = generate_router(
     func_delete=delete_target,
     func_count=count_target,
     prefix="/target",
-    tags=["Точки продаж"],
+    user_role=UserRole.PARTNER,
+    tags=["Целевая аудитория"],
 )

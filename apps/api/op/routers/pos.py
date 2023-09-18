@@ -1,3 +1,4 @@
+from constants import UserRole
 from core.database import get_db
 from core.router import generate_router
 from schemas import POSCreate, POSRead, POSReadList, POSUpdate
@@ -17,4 +18,5 @@ router = generate_router(
     func_count=count_pos,
     prefix="/pos",
     tags=["Точки продаж"],
+    user_role=UserRole.OPERATOR,
 )

@@ -1,3 +1,4 @@
+from constants import UserRole
 from core.database import get_db
 from core.router import generate_router
 from schemas import (
@@ -39,6 +40,7 @@ router = generate_router(
     func_count=count_card,
     prefix="/card",
     tags=["ЕКЖ"],
+    user_role=UserRole.OPERATOR,
 )
 
 router_history = generate_router(
@@ -55,4 +57,5 @@ router_history = generate_router(
     func_count=count_cardhistory,
     prefix="/card_history",
     tags=["ЕКЖ"],
+    user_role=UserRole.OPERATOR,
 )

@@ -1,3 +1,4 @@
+from .auth import router as auth_router
 from .card import router as card_router
 from .card import router_history as card_history_router
 from .path import router as path_router

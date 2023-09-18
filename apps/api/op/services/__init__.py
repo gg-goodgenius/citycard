@@ -1,3 +1,4 @@
+from .auth import *
 from .card import *
 from .path import *
 from .pos import *

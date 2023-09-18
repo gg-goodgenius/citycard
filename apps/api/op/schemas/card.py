@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from constants.card import Gender, TypeAction
+from constants import Gender, TypeAction
 from pydantic import BaseModel, ConfigDict
 
 

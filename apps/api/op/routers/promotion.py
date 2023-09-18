@@ -1,3 +1,4 @@
+from constants import UserRole
 from core.database import get_db
 from core.router import generate_router
 from schemas import (
@@ -38,7 +39,8 @@ router = generate_router(
     func_delete=delete_promotion,
     func_count=count_promotion,
     prefix="/promotion",
-    tags=["ЕКЖ"],
+    user_role=UserRole.PARTNER,
+    tags=["Акции"],
 )
 
 router_condition = generate_router(
@@ -54,5 +56,6 @@ router_condition = generate_router(
     func_delete=delete_promotion_condition,
     func_count=count_promotion_condition,
     prefix="/promotion_condition",
+    user_role=UserRole.PARTNER,
     tags=["Акции"],
 )

@@ -28,6 +28,7 @@ def healthcheck():
     return JSONResponse(status_code=200, content={"healthchek": True})
 
 
+app.include_router(auth_router)
 app.include_router(card_router)
 app.include_router(card_history_router)
 app.include_router(path_router)

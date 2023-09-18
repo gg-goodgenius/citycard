@@ -1,3 +1,4 @@
+from constants import UserRole
 from core.database import get_db
 from core.router import generate_router
 from schemas import PathCreate, PathRead, PathReadList, PathUpdate
@@ -17,4 +18,5 @@ router = generate_router(
     func_count=count_path,
     prefix="/path",
     tags=["Рейсы"],
+    user_role=UserRole.OPERATOR,
 )
