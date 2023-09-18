@@ -85,7 +85,7 @@ services:
       # - ./apps/nginx/conf.nossl.d/:/etc/nginx/conf.d/
       - ./apps/certbot/conf:/etc/letsencrypt
       - ./apps/certbot/www:/var/www/certbot
-      - ./apps/api/files/data/:/app/media/
+      - ./apps/media/:/www/media/
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"' && sed -e '/^http {/,/^}/{/^}/i\\client_max_body_size 0;' -e '}' /etc/nginx/nginx.conf"
     ports:
       - "80:80"
