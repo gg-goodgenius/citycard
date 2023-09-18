@@ -42,11 +42,29 @@ services:
     build:
       context: ./apps/web/op
       dockerfile: Dockerfile
-    image: ${PROJECT_NAME}-web-op
+    image: web-op
     restart: on-failure
-    container_name: ${PROJECT_NAME}-web-op
+    container_name: web-op
     ports:
       - "80:80"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
+      interval: 10s
+      timeout: 30s
+      retries: 10
+    depends_on:
+      api:
+        condition: service_healthy
+
+  web-partner:
+    build:
+      context: ./apps/web/partner
+      dockerfile: Dockerfile
+    image: web-partner
+    restart: on-failure
+    container_name: web-partner
+    ports:
+      - "81:80"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:80" ]
       interval: 10s
