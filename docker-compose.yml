@@ -69,7 +69,7 @@ services:
       timeout: 30s
       retries: 10
     depends_on:
-      api:
+      api-op:
         condition: service_healthy
 
   web-partner:
@@ -87,7 +87,7 @@ services:
       timeout: 30s
       retries: 10
     depends_on:
-      api:
+      api-partner:
         condition: service_healthy
 
   nginx:
