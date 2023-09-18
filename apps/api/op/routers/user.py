@@ -15,6 +15,6 @@ router = generate_router(
     func_update=update_user,
     func_delete=delete_user,
     func_count=count_user,
-    prefix="user",
-    tags=["Точки продаж"],
+    prefix="/user",
+    tags=["Пользователи"],
 )

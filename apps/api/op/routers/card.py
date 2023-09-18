@@ -37,7 +37,7 @@ router = generate_router(
     func_update=update_card,
     func_delete=delete_card,
     func_count=count_card,
-    prefix="card",
+    prefix="/card",
     tags=["ЕКЖ"],
 )
 
@@ -53,6 +53,6 @@ router_history = generate_router(
     func_update=update_cardhistory,
     func_delete=delete_cardhistory,
     func_count=count_cardhistory,
-    prefix="card",
+    prefix="/card_history",
     tags=["ЕКЖ"],
 )

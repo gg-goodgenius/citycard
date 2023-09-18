@@ -7,7 +7,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     database_url: str
     app_dir: str = str(Path.cwd())
-    media_path: str
     model_config = SettingsConfigDict(env_file=".env")
 
 

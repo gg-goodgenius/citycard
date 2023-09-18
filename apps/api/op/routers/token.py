@@ -15,6 +15,6 @@ router = generate_router(
     func_update=update_token,
     func_delete=delete_token,
     func_count=count_token,
-    prefix="token",
-    tags=["Точки продаж"],
+    prefix="/token",
+    tags=["Внешние сервисы"],
 )

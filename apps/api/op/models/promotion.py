@@ -14,6 +14,7 @@ class Promotion(Base):
     value = Column(Integer)
 
     user_id = Column(Integer, ForeignKey("user.id"))
+    target_id = Column(Integer, ForeignKey("target.id"), nullable=True)
 
 
 class PromotionCondition(Base):

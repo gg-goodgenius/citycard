@@ -37,7 +37,7 @@ router = generate_router(
     func_update=update_promotion,
     func_delete=delete_promotion,
     func_count=count_promotion,
-    prefix="promotion",
+    prefix="/promotion",
     tags=["ЕКЖ"],
 )
 
@@ -53,6 +53,6 @@ router_condition = generate_router(
     func_update=update_promotion_condition,
     func_delete=delete_promotion_condition,
     func_count=count_promotion_condition,
-    prefix="promotion",
+    prefix="/promotion_condition",
     tags=["Акции"],
 )

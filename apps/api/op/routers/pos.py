@@ -15,6 +15,6 @@ router = generate_router(
     func_update=update_pos,
     func_delete=delete_pos,
     func_count=count_pos,
-    prefix="pos",
+    prefix="/pos",
     tags=["Точки продаж"],
 )

@@ -15,6 +15,6 @@ router = generate_router(
     func_update=update_path,
     func_delete=delete_path,
     func_count=count_path,
-    prefix="path",
+    prefix="/path",
     tags=["Рейсы"],
 )
