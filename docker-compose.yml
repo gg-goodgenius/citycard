@@ -80,7 +80,9 @@ services:
     depends_on:
       api:
         condition: service_healthy
-      web:
+      web-op:
+        condition: service_healthy
+      web-partner:
         condition: service_healthy
 
   certbot:
