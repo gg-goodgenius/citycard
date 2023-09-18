@@ -46,7 +46,7 @@ services:
     restart: on-failure
     container_name: ${PROJECT_NAME}-web-op
     ports:
-      - "80:80"
+      - "82:80"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:80" ]
       interval: 10s
