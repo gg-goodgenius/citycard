@@ -1,5 +1,5 @@
 
-export const API_URL : string | undefined = process.env.REACT_APP_API_ADDRESS;
+export const API_URL: string | undefined = process.env.REACT_APP_API_ADDRESS;
 const ACCESS_TOKEN_KEY = 'accessToken';
 
 const REFRESH_TOKEN_KEY = 'refreshToken';
@@ -28,22 +28,24 @@ export async function fetchHandler<T>(
 		// test
 
 		if (token) {
-			init.headers['Authorization'] = `${token}`;
+			init.headers['Authorization'] = `Bearer ${token}`;
 		}
-		console.log(API_URL, input, init);
-		
+		// console.log("INPUT", input);
+		// console.log("Init", init);
+
 		const response = await fetch((API_URL || 'http://localhost:9000/') + input, init);
-		console.log(response);
-		
+		// console.log("RESPONSE", response);
+
 		const data = await response.json();
-		
+		// console.log("data", data);/
+
 		if (retry === -1) {
 			return { isError: true, data };
 		}
 
-		if (response.status === 400) {
+		if (response.status === 403) {
 			console.log('response.status === 400, trying to fetch again...');
-			requestHeaders.set('Authorization', `${refreshToken}`)
+			requestHeaders.set('Authorization', `Bearer ${refreshToken}`)
 			init.headers = requestHeaders;
 			await updateToken();
 			return await fetchHandler(input, init, retry - 1);
@@ -64,12 +66,18 @@ export async function fetchHandler<T>(
 	} catch (error) {
 		const err = error as Error;
 
-		console.error("catch error:",error);
+		console.error("catch error:", error);
 
 		return {
 			isError: true,
 			data: {
-				error: "unknown"
+				detail: [
+					{
+						loc: ['unknown', 0],
+						msg: err.message,
+						type: 'unknown',
+					},
+				],
 			},
 		};
 	}

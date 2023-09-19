@@ -1,20 +1,18 @@
-import { Typography, Button } from "antd"
+import { Button, Typography } from "antd";
 import { NavLink } from 'react-router-dom';
 import { useAppDispatch } from './../../hooks/useAppDispatch';
 import { useAppSelector } from './../../hooks/useAppSelector';
-import { setUser } from './../../store/features/user/slice';
 const UserInfo = () => {
-	const user = useAppSelector((state) => state.user.data);
-	const dispatch = useAppDispatch();
+    const user = useAppSelector((state) => state.user.data);
+    const dispatch = useAppDispatch();
     const handleExit = () => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         window.location.reload();
-        dispatch(setUser(null))
     }
     if (user) {
-        return <div style={{display: 'flex', flexDirection:'row', alignItems:'center', gap:25}}>
-            <Typography style={{color: 'white'}}>{user.username} ({user.role})</Typography>
+        return <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 25 }}>
+            <Typography style={{ color: 'white' }}>{user?.username} ({user.role})</Typography>
             <Button onClick={handleExit}> Выйти</Button>
         </div>
     } else {
@@ -22,4 +20,4 @@ const UserInfo = () => {
     }
 }
 
-export default  UserInfo
+export default UserInfo

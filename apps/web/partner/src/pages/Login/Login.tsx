@@ -1,13 +1,11 @@
 
-import { Button, Form, Input, message } from 'antd';
-import styles from './Login.module.scss'
-import { Typography } from 'antd'
+import { Button, Form, Input, Typography, message } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchLogin } from '../../api/login';
-import { setUser } from '../../store/features/user/slice';
-import { isErrored } from 'stream';
 import { useNavigate } from 'react-router-dom';
+import { fetchGetUserMe, fetchLogin } from '../../api/login';
+import { setUser } from '../../store/features/user/slice';
+import styles from './Login.module.scss';
 
 
 const onFinishFailed = (errorInfo: any) => {
@@ -20,7 +18,7 @@ const Login: React.FC = () => {
     const dispatch = useDispatch();
 
     const [messageApi, contextHolder] = message.useMessage({ duration: 5 });
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const success = () => {
         messageApi.open({
@@ -37,33 +35,29 @@ const Login: React.FC = () => {
     };
 
     const onFinish = async (values: any) => {
-
         setLoading(true);
-        const { data, isError } = await fetchLogin(values);
-        console.log(data, isError);
-        
-        if (isError) {
-            console.error(data);
-            error();
+        const me = await fetchGetUserMe()
+        if (me.isError) {
+            const { data, isError } = await fetchLogin(values);
+            if (isError) {
+                error();
+                setLoading(false);
+                return;
+            }
+            dispatch(setUser(data.user));
+            success();
             setLoading(false);
-            return;
+            localStorage.setItem('accessToken', data.access_token);
+            localStorage.setItem('refreshToken', data.refresh_token);
         }
-
-        // dispatch(setUser(data.user));
-        success();
-        navigate('/');
-        setLoading(false);
-        localStorage.setItem('accessToken', data.access_token);
-        localStorage.setItem('refreshToken', data.refresh_token);
-
-        console.log('Success login:', data);
+        navigate('/')
     };
 
     return (
         <div className={styles.container}>
             <div className={styles.formContainer}>
                 <Typography.Title level={3} style={{ textAlign: 'center', margin: '32px' }}>
-                {process.env.REACT_APP_TITLE}
+                    {process.env.REACT_APP_TITLE}
                 </Typography.Title>
                 <Form
                     name='login'

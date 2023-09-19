@@ -1,43 +1,50 @@
 
-export const API_URL : string | undefined = process.env.REACT_APP_API_ADDRESS;
+export const API_URL: string | undefined = process.env.REACT_APP_API_ADDRESS;
 const ACCESS_TOKEN_KEY = 'accessToken';
 
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
 export async function fetchHandler<T>(
 	input: RequestInfo | URL,
-	init?: RequestInit | undefined,
+	init?: RequestInit | undefined | any,
 	retry = 2,
 ): Promise<Api.Response<T>> {
 	try {
 		const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 		const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-		const requestHeaders: HeadersInit = new Headers()
+		let requestHeaders: HeadersInit = new Headers()
+
+		if (!init) {
+			init = {
+				headers: {},
+				method: 'GET',
+			};
+		}
+
+		if (!init.headers) {
+			init.headers = {};
+		}
+
+		// test
 
 		if (token) {
-			console.log("Token found: ", token);
-			requestHeaders.set('Authorization', `Bearer ${token}`)
+			init.headers['Authorization'] = `Bearer ${token}`;
 		}
-		if (!init) {
-			init= new Request(input);
-			init.headers = requestHeaders;
-			init.method = 'GET'
-		}
-		if (!init.headers) 
-		{
-			init.headers = requestHeaders;
-		}
-		
+		// console.log("INPUT", input);
+		// console.log("Init", init);
+
 		const response = await fetch((API_URL || 'http://localhost:9000/') + input, init);
+		// console.log("RESPONSE", response);
 
 		const data = await response.json();
+		// console.log("data", data);/
 
 		if (retry === -1) {
 			return { isError: true, data };
 		}
 
 		if (response.status === 403) {
-			console.log('response.status === 403, trying to fetch again...');
+			console.log('response.status === 400, trying to fetch again...');
 			requestHeaders.set('Authorization', `Bearer ${refreshToken}`)
 			init.headers = requestHeaders;
 			await updateToken();
@@ -59,12 +66,18 @@ export async function fetchHandler<T>(
 	} catch (error) {
 		const err = error as Error;
 
-		console.error("catch error:",error);
+		console.error("catch error:", error);
 
 		return {
 			isError: true,
 			data: {
-				error: "unknown"
+				detail: [
+					{
+						loc: ['unknown', 0],
+						msg: err.message,
+						type: 'unknown',
+					},
+				],
 			},
 		};
 	}
@@ -82,7 +95,7 @@ export async function updateToken() {
 		const response = await fetch(process.env.REACT_APP_API_ADDRESS + 'operator/auth/refresh_token', {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${refreshToken}`,
+				Authorization: `${refreshToken}`,
 			},
 		});
 

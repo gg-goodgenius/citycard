@@ -2,18 +2,18 @@ version: "3.8"
 services:
   api-partner:
     build:
-      context: ./apps/api/partner
-      dockerfile: Dockerfile
+      context: ./apps/api
+      dockerfile: partner.Dockerfile
     image: ${PROJECT_NAME}-api-partner
     container_name: ${PROJECT_NAME}-api-partner
     env_file:
-      - ./apps/api/partner/.env
+      - ./apps/api/.env
     volumes:
-      - ./apps/api/partner:/app
+      - ./apps/api:/app
     ports:
-      - 8080:8080
+      - 9001:9001
     healthcheck:
-      test: curl http://api-partner:8080/healthcheck || exit 1
+      test: curl http://api-partner:9000/healthcheck || exit 1
       interval: 30s
       timeout: 30s
       retries: 5
@@ -21,14 +21,14 @@ services:
 
   api-op:
     build:
-      context: ./apps/api/op
-      dockerfile: Dockerfile
+      context: ./apps/api
+      dockerfile: op.Dockerfile
     image: ${PROJECT_NAME}-api-op
     container_name: ${PROJECT_NAME}-api-op
     env_file:
-      - ./apps/api/op/.env
+      - ./apps/api/.env
     volumes:
-      - ./apps/api/op:/app
+      - ./apps/api:/app
     ports:
       - 9000:9000
     healthcheck:
