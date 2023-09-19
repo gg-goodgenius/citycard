@@ -28,14 +28,14 @@ class QRActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQrBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setBarcodeFormatDropdown()
+       // setBarcodeFormatDropdown()
 
         binding.qrScannerButton.setOnClickListener {
             scanQrCode.launch(null)
                 //startActivity(Intent(this, QRScannerActivity::class.java))
         }
 
-        binding.customScannerButton.setOnClickListener {
+       /* binding.customScannerButton.setOnClickListener {
             scanCustomCode.launch(
                 ScannerConfig.build {
                     setBarcodeFormats(listOf(selectedBarcodeFormat)) // set interested barcode formats
@@ -48,7 +48,7 @@ class QRActivity : AppCompatActivity() {
                     setUseFrontCamera(false) // use the front camera
                 }
             )
-        }
+        }*/
 
         if (intent.extras?.getBoolean(OPEN_SCANNER) == true) scanQrCode.launch(null)
     }
@@ -65,7 +65,7 @@ class QRActivity : AppCompatActivity() {
             is QRResult.QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
         }
 
-        Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
+       /* Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
             view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.run {
                 maxLines = 5
                 setTextIsSelectable(true)
@@ -78,7 +78,7 @@ class QRActivity : AppCompatActivity() {
                 }
             }
             setAction(R.string.ok_action) { }
-        }.show()
+        }.show()*/
     }
 
     private fun openUrl(url: String) {
@@ -89,7 +89,7 @@ class QRActivity : AppCompatActivity() {
         }
     }
 
-    private fun setBarcodeFormatDropdown() {
+   /* private fun setBarcodeFormatDropdown() {
         ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, BarcodeFormat.entries.map { it.name }).let {
             binding.barcodeFormatsAutoCompleteTextView.setAdapter(it)
             binding.barcodeFormatsAutoCompleteTextView.setText(it.getItem(it.getPosition(selectedBarcodeFormat.name)), false)
@@ -97,7 +97,7 @@ class QRActivity : AppCompatActivity() {
         binding.barcodeFormatsAutoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
             selectedBarcodeFormat = BarcodeFormat.entries[position]
         }
-    }
+    }*/
 
     companion object {
         const val OPEN_SCANNER = "open_scanner"

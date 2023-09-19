@@ -17,6 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.controller.App
 import com.example.controller.databinding.FragmentNfcBinding
+import com.example.controller.entities.CardHistory
+import com.example.controller.entities.CardHistoryDataItem
+import com.example.controller.entities.TypeAction
 import com.example.controller.localbase.CardsRepository
 import com.example.controller.ui.nfcPac.qr.barcode.nfc.Coroutines
 import com.example.controller.ui.nfcPac.qr.barcode.nfc.NFCManager
@@ -75,6 +78,9 @@ class NFCFragment : Fragment(), CompoundButton.OnCheckedChangeListener, NfcAdapt
             })*/
         }
 
+        binding.flBtRefreshCards.setOnClickListener {
+
+        }
         binding.toggleButton?.setOnCheckedChangeListener(this@NFCFragment)
         Coroutines.main(this@NFCFragment) { scope ->
             scope.launch(block = {
@@ -133,6 +139,18 @@ class NFCFragment : Fragment(), CompoundButton.OnCheckedChangeListener, NfcAdapt
         viewLifecycleOwner.lifecycleScope.launch {
             val card = viewModel.getCardFromDB(getDec(tag!!.id).toString())
             Log.d("getDeccc", getDec(tag!!.id).toString())
+
+
+           /* viewModel.newHistoryRow(
+                CardHistoryDataItem(1,
+                card.id,
+            val typeAction:Int,
+            val lat:Float,
+            val lon:Float,
+            val userId: TypeAction,
+            val promotionId:Int,))*/
+
+
             withContext(Dispatchers.Main) {
                 if (card != null) {
                     binding.tvAge.text = card.dateOfBirth.toString()

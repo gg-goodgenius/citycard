@@ -20,16 +20,15 @@
         android:name="com.example.controller.ui.workShiftPac.WorkShiftFragment"
         android:label="@string/title_work"
         tools:layout="@layout/fragment_work_shift_started" >
+
         <action
             android:id="@+id/action_navigation_work_shift_to_workShiftStartedFragment"
             app:destination="@id/workShiftStartedFragment" />
+
+
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.controller.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+
     <fragment
         android:id="@+id/workShiftStartedFragment"
         android:name="com.example.controller.ui.workShiftPac.workShiftStarted.WorkShiftStartedFragment"
@@ -37,10 +36,16 @@
         <action
             android:id="@+id/action_workShiftStartedFragment_to_navigation_work_shift"
             app:destination="@id/navigation_work_shift" />
+
     </fragment>
     <activity
         android:id="@+id/qrActivity"
         android:name="com.example.controller.ui.nfcPac.qr.QRActivity"
         android:label="activity_qractivity"
         tools:layout="@layout/activity_qr" />
+    <activity
+        android:id="@+id/pathHistoryActivity"
+        android:name="com.example.controller.pathHistory.PathHistoryActivity"
+        android:label="activity_path_history"
+        tools:layout="@layout/activity_path_history" />
 </navigation>

@@ -1,15 +1,15 @@
-package com.example.controller.ui.workShiftPac.rv
+package com.example.controller.pathHistory.rvHist
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.controller.pathHistory.rvHist.PathsHistItemTouchHelperAdapter
 
 
-class PathsItemTouchHelperCallback: ItemTouchHelper.Callback {
+class PathsHistItemTouchHelperCallback: ItemTouchHelper.Callback {
 
-    private var mAdapter: PathsItemTouchHelperAdapter? = null
+    private var mAdapter: PathsHistItemTouchHelperAdapter? = null
 
-    constructor(adapter: PathsItemTouchHelperAdapter?) {
+    constructor(adapter: PathsHistItemTouchHelperAdapter?) {
         mAdapter = adapter
     }
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {

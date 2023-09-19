@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.controller.entities.WorkShift
 import com.example.controller.localbase.PathsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -14,7 +16,7 @@ import java.util.UUID
 class WorkShiftViewModel(val pathsRepository: PathsRepository) : ViewModel() {
 
     fun createNewWorkShift() {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             pathsRepository.insertNewWorkShift(
                 WorkShift(
                     id = 0,

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerPath"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+
+
+        <TextView
+            android:id="@+id/checkCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Проверка карты" />
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Статус проверки: " />
+
+        <TextView
+            android:id="@+id/tvNumOfCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13454656772" />
+
+
+
+
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Дата проверки: "
+                    />
+
+
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+
+

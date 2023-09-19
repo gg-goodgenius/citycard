@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), DialogListener {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_nfc, R.id.navigation_work_shift, R.id.navigation_notifications
+                R.id.navigation_nfc, R.id.navigation_work_shift
             )
         )
         // setupActionBarWithNavController(navController, appBarConfiguration)
