@@ -12,6 +12,6 @@ type TokenRespDTO struct {
 }
 
 type RefreshTokenReqDTO struct {
-	UserID       int64  `json:"user_id"`
+	UserID       int64  `json:"id"`
 	RefreshToken string `json:"refresh_token"`
 }

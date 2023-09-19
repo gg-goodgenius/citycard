@@ -8,6 +8,5 @@ RUN GOOS=linux go build -o ./build .
 FROM ubuntu
 ADD ./internal/adapters/db/postgres/migrations /migrations
 COPY --from=builder /app/build /home/citycard/app
-ADD ./docs /home/citycard/docs
 EXPOSE 8080 8080
 CMD ["./home/citycard/app"]

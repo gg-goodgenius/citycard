@@ -17,7 +17,6 @@ import (
 	"github.com/heetch/confita"
 	"github.com/heetch/confita/backend/env"
 	_ "github.com/lib/pq"
-	_ "github.com/santosh/gingo/docs"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -36,13 +35,13 @@ func Run() {
 	dsn := os.Getenv("DATABASE_URL")
 	db := postgresdb.NewDatabase(dsn)
 	defer db.Close()
-	err = postgresdb.Up(os.Getenv("MIGRATIONS_PATH"), dsn)
-	if err != nil && err.Error() != "no change" {
-		log.Printf("couldn't migrate into database: %s\n", err)
-		return
-	}
+	// err = postgresdb.Up(os.Getenv("MIGRATIONS_PATH"), dsn)
+	// if err != nil && err.Error() != "no change" {
+	// 	log.Printf("couldn't migrate into database: %s\n", err)
+	// 	return
+	// }
 
-	log.Printf("migrations completed successfully")
+	// log.Printf("migrations completed successfully")
 
 	engine := handler.NewRouter()
 	healthcheckComposite := composites.NewHealthcheckComposite()
@@ -68,10 +67,10 @@ func Run() {
 
 	<-stop
 	go func() {
-		err := postgresdb.Down(os.Getenv("MIGRATIONS_PATH"), dsn)
-		if err != nil {
-			fmt.Println(err)
-		}
+		// err := postgresdb.Down(os.Getenv("MIGRATIONS_PATH"), dsn)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// }
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel()
 		_ = srv.Shutdown(ctx)

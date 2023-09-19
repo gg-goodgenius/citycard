@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -16,17 +17,21 @@ func CheckAuthToken(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	userTypes := []string{"operator", "control", "external", "partner"}
+	userRoles := []string{"operator", "control", "external", "partner"}
 
 	var id int64
 	var err error
-	for i := range userTypes {
-		if id, err = myutil.Auth(userTypes[i], token); err.Error() != "token of wrong user type" {
+	var userRole string
+	for i := range userRoles {
+		if id, err = myutil.Auth(userRoles[i], token); err.Error() != "token of wrong user type" {
 			c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("failed to authenticate user: %s", err)})
 			c.Abort()
 			return
 		}
 		if id != 0 {
+			userRole = userRoles[i]
+			c.Request.Header.Add("role", userRole)
+			c.Request.Header.Add("id", strconv.FormatInt(id, 10))
 			break
 		}
 	}
