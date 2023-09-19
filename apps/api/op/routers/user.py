@@ -1,5 +1,7 @@
 from core.database import get_db
 from core.router import generate_router
+from dependencies import get_current_active_user, get_current_user
+from fastapi import Depends
 from schemas import UserCreate, UserRead, UserReadList, UserUpdate
 from services import count_user, create_user, delete_user, get_all_user, get_one_user, update_user
 
@@ -18,3 +20,9 @@ router = generate_router(
     prefix="/user",
     tags=["Пользователи"],
 )
+
+
+@router.get("/me/", response_model=UserRead)
+def me(current_user: UserRead = Depends(get_current_active_user)):
+    print(current_user)
+    return current_user

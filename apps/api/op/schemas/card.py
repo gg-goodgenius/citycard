@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from constants import Gender, TypeAction
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, computed_field
 
 
 class CardBase(BaseModel):
@@ -13,6 +13,7 @@ class CardBase(BaseModel):
     birthday: datetime
     gender: Gender
     snils: str
+    is_active: bool
 
 
 class CardCreate(CardBase):
@@ -23,6 +24,14 @@ class CardRead(CardBase):
     id: int
     created_at: datetime
     updated_at: datetime
+
+    @computed_field
+    def age(self) -> int:
+        today = datetime.today()
+        birthday = self.birthday
+        age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+        return age
+
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -37,17 +46,27 @@ class CardReadList(BaseModel):
     birthday: datetime
     gender: Gender
     snils: str
+    is_active: bool
+
+    @computed_field
+    def age(self) -> int:
+        today = datetime.today()
+        birthday = self.birthday
+        age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+        return age
+
     model_config = ConfigDict(from_attributes=True)
 
 
 class CardUpdate(BaseModel):
-    tagid: Optional[str]
-    lastname: Optional[str]
-    firstname: Optional[str]
-    middlename: Optional[str]
-    birthday: Optional[datetime]
-    gender: Optional[Gender]
-    snils: Optional[str]
+    tagid: Optional[str] = None
+    lastname: Optional[str] = None
+    firstname: Optional[str] = None
+    middlename: Optional[str] = None
+    birthday: Optional[datetime] = None
+    gender: Optional[Gender] = None
+    snils: Optional[str] = None
+    is_active: Optional[bool] = None
 
 
 class CardHistoryBase(BaseModel):
@@ -74,7 +93,7 @@ class CardHistoryReadList(BaseModel):
     id: int
     card_id: int
     user_id: int
-    promotion_id: Optional[int]
+    promotion_id: Optional[int] = None
     date: datetime
     action: str
     type_action: TypeAction
@@ -84,11 +103,11 @@ class CardHistoryReadList(BaseModel):
 
 
 class CardHistoryUpdate(BaseModel):
-    card_id: Optional[int]
-    user_id: Optional[int]
-    promotion_id: Optional[int]
-    date: Optional[datetime]
-    action: Optional[str]
-    type_action: Optional[TypeAction]
-    lat: Optional[str]
-    lon: Optional[str]
+    card_id: Optional[int] = None
+    user_id: Optional[int] = None
+    promotion_id: Optional[int] = None
+    date: Optional[datetime] = None
+    action: Optional[str] = None
+    type_action: Optional[TypeAction] = None
+    lat: Optional[str] = None
+    lon: Optional[str] = None

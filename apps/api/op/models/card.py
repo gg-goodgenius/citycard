@@ -1,5 +1,5 @@
 from core.database import Base
-from sqlalchemy import Column, Date, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, Date, DateTime, Float, ForeignKey, Integer, String
 from sqlalchemy.sql import func
 
 
@@ -9,7 +9,7 @@ class Card(Base):
     id = Column(Integer, primary_key=True, index=True)
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     tagid = Column(String)
     lastname = Column(String)
@@ -20,6 +20,8 @@ class Card(Base):
 
     gender = Column(String)
     snils = Column(String)
+
+    is_active = Column(Boolean)
 
 
 class CardHistory(Base):

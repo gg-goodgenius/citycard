@@ -34,9 +34,9 @@ class PathReadList(BaseModel):
 
 
 class PathUpdate(BaseModel):
-    work_id: Optional[int]
-    gov_number: Optional[str]
-    path_number: Optional[str]
-    user_id: Optional[int]
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
+    work_id: Optional[int] = None
+    gov_number: Optional[str] = None
+    path_number: Optional[str] = None
+    user_id: Optional[int] = None
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None

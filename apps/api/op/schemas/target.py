@@ -33,8 +33,8 @@ class TargetReadList(BaseModel):
 
 
 class TargetUpdate(BaseModel):
-    id: Optional[int]
-    city: Optional[str]
-    min_age: Optional[int]
-    max_age: Optional[int]
-    gender: Optional[str]
+    id: Optional[int] = None
+    city: Optional[str] = None
+    min_age: Optional[int] = None
+    max_age: Optional[int] = None
+    gender: Optional[str] = None

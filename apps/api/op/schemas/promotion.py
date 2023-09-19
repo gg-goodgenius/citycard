@@ -35,11 +35,11 @@ class PromotionReadList(BaseModel):
 
 
 class PromotionUpdate(BaseModel):
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
-    name: Optional[str]
-    value: Optional[str]
-    user_id: Optional[int]
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    name: Optional[str] = None
+    value: Optional[str] = None
+    user_id: Optional[int] = None
 
 
 class PromotionCondition(BaseModel):
@@ -68,7 +68,7 @@ class PromotionConditionReadList(BaseModel):
 
 
 class PromotionConditionUpdate(BaseModel):
-    promotion_id: Optional[int]
-    field: Optional[PromotionConditionField]
-    condition: Optional[PromotionConditionEq]
-    value: Optional[str]
+    promotion_id: Optional[int] = None
+    field: Optional[PromotionConditionField] = None
+    condition: Optional[PromotionConditionEq] = None
+    value: Optional[str] = None

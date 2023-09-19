@@ -33,8 +33,8 @@ class UserReadList(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    id: Optional[int]
-    username: Optional[str]
-    email: Optional[str]
-    is_active: Optional[bool]
-    role: Optional[str]
+    id: Optional[int] = None
+    username: Optional[str] = None
+    email: Optional[str] = None
+    is_active: Optional[bool] = None
+    role: Optional[str] = None

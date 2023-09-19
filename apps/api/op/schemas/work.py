@@ -29,6 +29,6 @@ class WorkReadList(BaseModel):
 
 
 class WorkUpdate(BaseModel):
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
-    user_id: Optional[int]
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    user_id: Optional[int] = None

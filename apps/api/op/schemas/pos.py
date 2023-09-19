@@ -32,8 +32,8 @@ class POSReadList(BaseModel):
 
 
 class POSUpdate(BaseModel):
-    user_id: Optional[int]
-    name: Optional[int]
-    address: Optional[str]
-    lat: Optional[float]
-    lon: Optional[float]
+    user_id: Optional[int] = None
+    name: Optional[int] = None
+    address: Optional[str] = None
+    lat: Optional[float] = None
+    lon: Optional[float] = None

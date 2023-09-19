@@ -31,6 +31,6 @@ class TokenReadList(BaseModel):
 
 
 class TokenUpdate(BaseModel):
-    id: Optional[int]
-    name: Optional[str]
-    value: Optional[str]
+    id: Optional[int] = None
+    name: Optional[str] = None
+    value: Optional[str] = None

@@ -1,16 +1,14 @@
-import { ProtectedRoute } from './ProtectedRoute';
-import React from 'react';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import { CardDetail, Card } from './pages/Card';
-import { ControlDetail, Control } from './pages/Control';
+import { ProtectedRoute } from './ProtectedRoute';
+import { Card, CardDetail } from './pages/Card';
+import { Control, ControlDetail } from './pages/Control';
 import { Login } from './pages/Login';
-import { PartnerDetail, Partner } from './pages/Partner';
-import { PosDetail, Pos } from './pages/Pos';
-import { PromotionDetail, Promotion } from './pages/Promotion';
-import { TargetDetail, Target } from './pages/Target';
-import { TokenDetail, Token } from './pages/Token';
-import { About } from './pages/About';
+import { Partner, PartnerDetail } from './pages/Partner';
+import { Pos, PosDetail } from './pages/Pos';
+import { Promotion, PromotionDetail } from './pages/Promotion';
+import { Target, TargetDetail } from './pages/Target';
+import { Token, TokenDetail } from './pages/Token';
 
 export const router = createBrowserRouter([
 	{
@@ -29,7 +27,7 @@ export const router = createBrowserRouter([
 				path: '/card/:id',
 				element: (
 					<ProtectedRoute>
-						<CardDetail/>
+						<CardDetail />
 					</ProtectedRoute>
 				),
 			},
@@ -127,14 +125,6 @@ export const router = createBrowserRouter([
 				element: (
 					<ProtectedRoute>
 						<TokenDetail />
-					</ProtectedRoute>
-				),
-			},
-			{
-				path: '/about',
-				element: (
-					<ProtectedRoute>
-						<About />
 					</ProtectedRoute>
 				),
 			},

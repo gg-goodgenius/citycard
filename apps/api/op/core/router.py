@@ -53,8 +53,10 @@ def generate_router(
     ) -> read_schema:
         return func_get_one(db=db, id=id)
 
-    @router.get("/count", response_model=int)
-    def route_count(db: Session = Depends(get_db)) -> int:
+    @router.get("/count/", response_model=int)
+    def route_count(
+        db: Session = Depends(get_db), current_user: UserRead = Depends(get_user_with_required_roles(roles=[user_role]))
+    ) -> int:
         return func_count(db=db)
 
     @router.patch("/{id}", response_model=read_schema)
@@ -64,9 +66,10 @@ def generate_router(
         db: Session = Depends(get_db),
         current_user: UserRead = Depends(get_user_with_required_roles(roles=[user_role])),
     ) -> read_schema:
+        print(update)
         return func_update(db=db, id=id, update=update)
 
-    @router.delete("/{id}", response_model=read_schema)
+    @router.delete("/{id}", response_model=BoolResult)
     def route_delete(
         id: int,
         db: Session = Depends(get_db),
