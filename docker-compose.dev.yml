@@ -11,7 +11,7 @@ services:
     volumes:
       - ./apps/api:/app
     ports:
-      - 9001:9000
+      - 9001:9001
     healthcheck:
       test: curl http://api-partner:9000/healthcheck || exit 1
       interval: 30s

@@ -44,6 +44,7 @@ def healthcheck():
     return JSONResponse(status_code=200, content={"healthchek": True})
 
 
+app_partner.include_router(auth_router)
 app_op.include_router(auth_router)
 app_op.include_router(card_router)
 app_op.include_router(card_history_router)
@@ -65,4 +66,4 @@ if __name__ == "__main__":
     if sys.argv[1] == "op":
         uvicorn.run("main:app_op", host="0.0.0.0", port=9000, reload=True, log_config=log_config)
     if sys.argv[1] == "partner":
-        uvicorn.run("main:app_partner", host="0.0.0.0", port=9000, reload=True, log_config=log_config)
+        uvicorn.run("main:app_partner", host="0.0.0.0", port=9001, reload=True, log_config=log_config)

@@ -1,5 +1,6 @@
 from core.database import Base
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 
 class Promotion(Base):
@@ -16,6 +17,8 @@ class Promotion(Base):
     user_id = Column(Integer, ForeignKey("user.id"))
     target_id = Column(Integer, ForeignKey("target.id"), nullable=True)
 
+    condition = relationship("PromotionCondition", back_populates="promotion")
+
 
 class PromotionCondition(Base):
     __tablename__ = "promotion_condidtion"
@@ -26,3 +29,5 @@ class PromotionCondition(Base):
     field = Column(String)
     condition = Column(String)
     value = Column(String)
+
+    promotion = relationship("Promotion", back_populates="condition")

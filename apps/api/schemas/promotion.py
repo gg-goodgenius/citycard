@@ -5,43 +5,6 @@ from constants.promotion import PromotionConditionEq, PromotionConditionField
 from pydantic import BaseModel, ConfigDict
 
 
-class PromotionBase(BaseModel):
-    start_date: datetime
-    end_date: datetime
-
-    name: str
-    value: str
-
-    user_id: int
-
-
-class PromotionCreate(PromotionBase):
-    pass
-
-
-class PromotionRead(PromotionBase):
-    id: int
-    model_config = ConfigDict(from_attributes=True)
-
-
-class PromotionReadList(BaseModel):
-    id: int
-    start_date: datetime
-    end_date: datetime
-    name: str
-    value: str
-    user_id: int
-    model_config = ConfigDict(from_attributes=True)
-
-
-class PromotionUpdate(BaseModel):
-    start_date: Optional[datetime] = None
-    end_date: Optional[datetime] = None
-    name: Optional[str] = None
-    value: Optional[str] = None
-    user_id: Optional[int] = None
-
-
 class PromotionCondition(BaseModel):
     promotion_id: int
     field: PromotionConditionField
@@ -72,3 +35,41 @@ class PromotionConditionUpdate(BaseModel):
     field: Optional[PromotionConditionField] = None
     condition: Optional[PromotionConditionEq] = None
     value: Optional[str] = None
+
+
+class PromotionBase(BaseModel):
+    start_date: datetime
+    end_date: datetime
+
+    name: str
+    value: int
+
+    user_id: int
+
+
+class PromotionCreate(PromotionBase):
+    pass
+
+
+class PromotionRead(PromotionBase):
+    id: int
+    condition: list[PromotionConditionRead]
+    model_config = ConfigDict(from_attributes=True)
+
+
+class PromotionReadList(BaseModel):
+    id: int
+    start_date: datetime
+    end_date: datetime
+    name: str
+    value: int
+    user_id: int
+    model_config = ConfigDict(from_attributes=True)
+
+
+class PromotionUpdate(BaseModel):
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    name: Optional[str] = None
+    value: Optional[int] = None
+    user_id: Optional[int] = None
