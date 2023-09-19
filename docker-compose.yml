@@ -16,24 +16,24 @@ services:
       timeout: 30s
       retries: 3
 
-  api-partner:
-    build:
-      context: ./apps/api/partner
-      dockerfile: Dockerfile
-    image: api-partner
-    container_name: api-partner
-    env_file:
-      - ./apps/api/partner/.env
-    volumes:
-      - ./apps/api/partner:/app
-    ports:
-      - 8080:8080
-    healthcheck:
-      test: curl http://api-partner:8080/healthcheck || exit 1
-      interval: 30s
-      timeout: 30s
-      retries: 5
-      start_period: 10s
+  # api-partner:
+  #   build:
+  #     context: ./apps/api/partner
+  #     dockerfile: Dockerfile
+  #   image: api-partner
+  #   container_name: api-partner
+  #   env_file:
+  #     - ./apps/api/partner/.env
+  #   volumes:
+  #     - ./apps/api/partner:/app
+  #   ports:
+  #     - 8080:8080
+  #   healthcheck:
+  #     test: curl http://api-partner:8080/healthcheck || exit 1
+  #     interval: 30s
+  #     timeout: 30s
+  #     retries: 5
+  #     start_period: 10s
 
   api-op:
     build:
@@ -86,9 +86,6 @@ services:
       interval: 10s
       timeout: 30s
       retries: 10
-    depends_on:
-      api-partner:
-        condition: service_healthy
 
   nginx:
     container_name: nginx
