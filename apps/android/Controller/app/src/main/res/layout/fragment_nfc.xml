@@ -38,36 +38,63 @@
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text="Имя" />
 
             <TextView
                 android:id="@+id/tvSurname"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text="Фамилия" />
 
             <TextView
                 android:id="@+id/tvPatronymic"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text="Отчество" />
 
             <TextView
                 android:id="@+id/tvAge"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text="Возраст" />
 
             <TextView
                 android:id="@+id/tvGender"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text="Пол" />
+            <TextView
+                android:id="@+id/tvPromotion"
+                android:textSize="20dp"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Скидка: "  />
+            <Button
+                android:id="@+id/btAlert"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Предупреждение"
 
+                android:backgroundTint="#BFD3D39F"
+
+                tools:layout_editor_absoluteX="65dp"
+                tools:layout_editor_absoluteY="45dp" />
+
+            <Button
+                android:id="@+id/btBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Нарушение"
+                android:textColor="@color/black"
+                android:backgroundTint="#BFD89292"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="118dp" />
 
         </LinearLayout>
 
@@ -96,13 +123,28 @@
 
     <Button
         android:id="@+id/bt_qr"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#BFD4D4D5"
         android:text="Читать qr-код"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/toggle_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/flBtRefreshCards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_popup_sync"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

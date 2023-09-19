@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.datastore.preferences.createDataStore
 import androidx.datastore.preferences.edit
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
@@ -18,15 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.controller.App
 import com.example.controller.databinding.FragmentWorkShiftStartedBinding
 import com.example.controller.ui.workShiftPac.WorkShiftFragment
-import com.example.controller.ui.workShiftPac.WorkShiftFragmentDirections
 import com.example.controller.ui.workShiftPac.dialogs.NewPathAlertDialog
 import com.example.controller.ui.workShiftPac.dialogs.WorkShiftClosureAlertDialog
+import com.example.controller.pathHistory.rvHist.PathsHistItemTouchHelperCallback
+import com.example.controller.pathHistory.rvHist.PathsHistRVAdapter
+import com.example.controller.ui.workShiftPac.WorkShiftFragmentDirections
+import com.example.controller.ui.workShiftPac.rv.PathsHistVerticalItemDecorator
 import com.example.controller.ui.workShiftPac.rv.PathsItemTouchHelperCallback
 import com.example.controller.ui.workShiftPac.rv.PathsRVAdapter
-import com.example.controller.ui.workShiftPac.rv.PathsVerticalItemDecorator
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -67,11 +65,15 @@ class WorkShiftStartedFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
                 .apply {
                     addItemDecoration(
-                        PathsVerticalItemDecorator(50)
+                        PathsHistVerticalItemDecorator(50)
                     )
                 }
         }
-
+        /*projectAdapter.onPathsClickListener = {
+                    findNavController().navigate(
+                        WorkShiftStartedFragmentDirections.
+                    )
+                }*/
         bindingStarted.ibCloseWork.setOnClickListener {
             val newWorkShiftClosureAlertDialog = WorkShiftClosureAlertDialog()
             val manager = childFragmentManager
@@ -87,6 +89,17 @@ class WorkShiftStartedFragment : Fragment() {
         }
 
         return bindingStarted.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        /*projectAdapter.onPathsClickListener = {
+            findNavController().navigate(
+                WorkShiftStartedFragmentDirections.
+            )
+        }*/
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
 

@@ -73,10 +73,11 @@ class WorkShiftFragment : Fragment() {
                 }
                 viewModel.createNewWorkShift()
                 isStarted = true
+                findNavController().navigate(
+                    WorkShiftFragmentDirections.actionNavigationWorkShiftToWorkShiftStartedFragment()
+                )
             }
-            findNavController().navigate(
-                WorkShiftFragmentDirections.actionNavigationWorkShiftToWorkShiftStartedFragment()
-            )
+
         }
         if (isStarted==false || isStarted==null) {
             binding.btStartWorkShift.isEnabled = true

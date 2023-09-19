@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.controller.databinding.ItemPathBinding
 import com.example.controller.entities.Path
+import com.example.controller.pathHistory.rvHist.PathsHistDiffCallback
+import com.example.controller.pathHistory.rvHist.PathsHistItemTouchHelperAdapter
+import com.example.controller.pathHistory.rvHist.PathsHistViewHolder
 import java.util.Collections
 
 

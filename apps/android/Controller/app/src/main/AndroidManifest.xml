@@ -7,6 +7,9 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.NFC" />
 
@@ -26,6 +29,12 @@
         android:theme="@style/Theme.Controller"
         tools:targetApi="31">
         <activity
+            android:name=".pathHistory.PathHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.authPac.AuthActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.nfcPac.qr.QRActivity"
             android:exported="true" />
         <activity
@@ -36,7 +45,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,17 +56,16 @@
             </intent-filter>
         </activity>
 
-
         <service
             android:name=".ui.nfcPac.qr.barcode.QuickieTileService"
+            android:exported="true"
             android:icon="@drawable/ic_qs_qrcode"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:exported="true">
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
-                <action
-                    android:name="android.service.quicksettings.action.QS_TILE"/>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
