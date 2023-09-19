@@ -1,7 +1,7 @@
 import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons"
 import { Tooltip, message } from "antd"
 import { useEffect, useState } from "react"
-import { fetchDeleteCard, fetchGetCardAll, fetchGetCardCount, fetchPatchCard } from "../../api/card"
+import { fetchDelete, fetchGetAll, fetchGetCount, fetchPatch } from "../../api/fetch"
 import { TableData } from "../../components/TableData"
 import { getNotificationMethods } from "../../components/utils/notification"
 import { DatabaseType, TableDataType } from "../../types/declaration"
@@ -13,10 +13,11 @@ const Card = () => {
     const [total, setTotal] = useState(10)
     const [loading, setLoading] = useState(true);
     const notifications = getNotificationMethods(messageApi);
+    const url = 'card'
 
     const getData = async (params: Api.Params.Pagination) => {
         setLoading(true);
-        const result = await fetchGetCardAll(params);
+        const result = await fetchGetAll(url, params);
         if (result.isError) {
             notifications.error('get');
             setLoading(false);
@@ -27,6 +28,9 @@ const Card = () => {
     }
 
     useEffect(() => {
+        console.log("PAGE", page);
+        console.log("PAGESIZE", pageSize);
+
         const params = {
             offset: (page - 1) * pageSize,
             limit: pageSize
@@ -35,7 +39,7 @@ const Card = () => {
     }, [page, pageSize, total]);
 
     useEffect(() => {
-        fetchGetCardCount().then((result) => {
+        fetchGetCount(url).then((result) => {
             if (result.isError) {
                 return;
             }
@@ -107,7 +111,7 @@ const Card = () => {
     const handelDelete = async (ids: Array<any>) => {
         ids.map(async (id) => {
             console.log('delete', id);
-            const result = await fetchDeleteCard(id)
+            const result = await fetchDelete(url, id)
             if (result.isError) {
                 notifications.error('delete')
                 console.log(result.data?.detail);
@@ -119,7 +123,7 @@ const Card = () => {
     const handelBlock = (ids: Array<any>) => {
         console.log('Block', ids);
         ids.map(async (id) => {
-            const result = await fetchPatchCard(id, { is_active: false })
+            const result = await fetchPatch(url, id, { is_active: false })
             if (result.isError) {
                 notifications.error('patch')
                 console.log(result.data?.detail);
@@ -131,7 +135,7 @@ const Card = () => {
     const handelUnBlock = (ids: Array<any>) => {
         console.log('UnBlock', ids);
         ids.map(async (id) => {
-            const result = await fetchPatchCard(id, { is_active: true })
+            const result = await fetchPatch(url, id, { is_active: true })
             if (result.isError) {
                 notifications.error('patch')
                 console.log(result.data?.detail);
@@ -165,7 +169,7 @@ const Card = () => {
         items={data}
         columns={columns}
         buttons={buttons}
-        routeDetail='card'
+        routeDetail={url}
         pagination={{ page, pageSize, total, setPage, setPageSize }} />
 }
 export default Card

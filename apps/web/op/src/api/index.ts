@@ -30,14 +30,14 @@ export async function fetchHandler<T>(
 		if (token) {
 			init.headers['Authorization'] = `Bearer ${token}`;
 		}
-		// console.log(input);
-		// console.log(init);
+		// console.log("INPUT", input);
+		// console.log("Init", init);
 
 		const response = await fetch((API_URL || 'http://localhost:9000/') + input, init);
-		// console.log(response);
+		// console.log("RESPONSE", response);
 
 		const data = await response.json();
-		// console.log(data);
+		// console.log("data", data);/
 
 		if (retry === -1) {
 			return { isError: true, data };
