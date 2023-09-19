@@ -1,4 +1,5 @@
 import { BaseButtonProps } from "antd/es/button/button";
+import type { ColumnGroupType, ColumnType } from 'antd/es/table';
 
 
 declare namespace DatabaseType {
@@ -10,8 +11,8 @@ declare namespace DatabaseType {
         password: string;
     }
     export type Token = {
-        access_token : string;
-        refresh_token : string;
+        access_token: string;
+        refresh_token: string;
         expired_at: string;
     }
     export type Card = {
@@ -24,13 +25,14 @@ declare namespace DatabaseType {
         gender: 'male' | 'female';
         age: number;
         snils: string;
+        is_active: boolean;
     }
     export type CardHistory = {
         id: number;
         card_id: Card['id'];
         date: string;
         action: string;
-        type_action: 'info' | 'alert' | 'block' ;
+        type_action: 'info' | 'alert' | 'block';
         lat: number;
         lon: number;
         user_id: User['id'];
@@ -87,13 +89,17 @@ declare namespace TableDataType {
         title: string;
         type?: BaseButtonProps['type'];
         danger?: boolean;
-        onClick: (id: Array<number> | number) => void
-        }
-    type Column = {
-        title?: string;
-        sorter?: boolean;
-        filters?: Array<any>;
+        onClick?: () => void;
+        onClickWithSelectedRow?: (ids: React.Key[]) => void;
     }
+    type Column = (ColumnGroupType<any> | ColumnType<any>)
     type Title = string;
     type RouteDetail = string;
+    type Pagination = {
+        page: number;
+        pageSize: number;
+        total: number;
+        setPage: (number) => void;
+        setPageSize: (number) => void;
+    }
 }
